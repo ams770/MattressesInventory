@@ -1,1 +1,21 @@
-/.idea
+## Ignore build outputs
+[Bb]in/
+[Oo]bj/
+
+## Ignore IDE and editor specific files
+.vs/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.vscode/
+
+## Ignore OS specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
