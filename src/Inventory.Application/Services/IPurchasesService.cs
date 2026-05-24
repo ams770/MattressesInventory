@@ -1,6 +1,6 @@
 namespace Inventory.Application.Services;
 
-public interface IPurchasesSerivce
+public interface IPurchasesService
 {
     
 }

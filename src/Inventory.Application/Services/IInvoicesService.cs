@@ -1,6 +1,6 @@
 namespace Inventory.Application.Services;
 
-public class IInvoicesSerivce
+public interface IInvoicesService
 {
     
 }
