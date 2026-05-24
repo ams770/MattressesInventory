@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Inventory.Application.Clients;
-using Inventory.Application.Clients.Commands;
-using Inventory.Application.Clients.Queries;
+using Inventory.Application.Services;
 using Inventory.Domain.Common;
 using Inventory.API.Common;
 
@@ -10,37 +9,34 @@ namespace Inventory.API.Controllers;
 public record CreateClientRequest(string Name, string PhoneNumber);
 public record UpdateClientRequest(string Name, string PhoneNumber);
 
-public class ClientsController : ApiControllerBase
+public class ClientsController(IClientsService clientsService) : ApiControllerBase
 {
     [HttpPost]
     public async Task<ActionResult<Result<Guid>>> Create([FromBody] CreateClientRequest request, CancellationToken ct)
     {
-        var id = await Mediator.Send(new CreateClientCommand(request.Name, request.PhoneNumber), ct);
+        var id = await clientsService.CreateAsync(request.Name, request.PhoneNumber, ct);
         return Ok(Result<Guid>.Success(id));
     }
 
     [HttpPut("{id}")]
     public async Task<ActionResult<Result>> Update(Guid id, [FromBody] UpdateClientRequest request, CancellationToken ct)
     {
-        await Mediator.Send(new UpdateClientCommand(id, request.Name, request.PhoneNumber), ct);
+        await clientsService.UpdateAsync(id, request.Name, request.PhoneNumber, ct);
         return Ok(Result.Success());
     }
 
     [HttpDelete("{id}")]
     public async Task<ActionResult<Result>> Delete(Guid id, CancellationToken ct)
     {
-        await Mediator.Send(new DeleteClientCommand(id), ct);
+        await clientsService.DeleteAsync(id, ct);
         return Ok(Result.Success());
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Result<ClientDto>>> GetById(Guid id, CancellationToken ct)
     {
-        var client = await Mediator.Send(new GetClientByIdQuery(id), ct);
-        if (client == null)
-        {
-            throw new KeyNotFoundException();
-        }
+        var client = await clientsService.GetByIdAsync(id, ct);
+        if (client == null) throw new KeyNotFoundException();
         return Ok(Result<ClientDto>.Success(client));
     }
 
@@ -51,7 +47,7 @@ public class ClientsController : ApiControllerBase
         [FromQuery] int pageSize = 10,
         CancellationToken ct = default)
     {
-        var result = await Mediator.Send(new GetAllClientsQuery(searchTerm, pageNumber, pageSize), ct);
+        var result = await clientsService.GetAllAsync(searchTerm, pageNumber, pageSize, ct);
         return Ok(Result<PagedResult<ClientDto>>.Success(result));
     }
 }
