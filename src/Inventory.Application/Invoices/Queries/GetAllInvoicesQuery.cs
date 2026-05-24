@@ -4,14 +4,30 @@ using Inventory.Domain.Interfaces;
 
 namespace Inventory.Application.Invoices.Queries;
 
-public record GetAllInvoicesQuery(InvoicePagedRequest Request) : IRequest<PagedResult<InvoiceDto>>;
+public record GetAllInvoicesQuery(
+    string? SearchTerm,
+    int PageNumber = 1,
+    int PageSize = 10,
+    Guid? ClientId = null,
+    DateTime? FromDate = null,
+    DateTime? ToDate = null) : IRequest<PagedResult<InvoiceDto>>;
 
 public class GetAllInvoicesQueryHandler(IInvoiceRepository invoiceRepository)
     : IRequestHandler<GetAllInvoicesQuery, PagedResult<InvoiceDto>>
 {
     public async Task<PagedResult<InvoiceDto>> Handle(GetAllInvoicesQuery request, CancellationToken ct)
     {
-        var result = await invoiceRepository.GetAllAsync(request.Request, ct);
+        var pagedRequest = new InvoicePagedRequest
+        {
+            SearchTerm = request.SearchTerm,
+            PageNumber = request.PageNumber,
+            PageSize = request.PageSize,
+            ClientId = request.ClientId,
+            FromDate = request.FromDate,
+            ToDate = request.ToDate
+        };
+
+        var result = await invoiceRepository.GetAllAsync(pagedRequest, ct);
         var dtos = result.Items.Select(invoice => new InvoiceDto(
             invoice.Id,
             invoice.ClientId,

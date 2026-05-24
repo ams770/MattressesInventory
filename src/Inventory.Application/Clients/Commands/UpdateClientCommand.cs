@@ -1,11 +1,13 @@
 using MediatR;
+using Inventory.Application.Interfaces;
 using Inventory.Domain.Interfaces;
 
 namespace Inventory.Application.Clients.Commands;
 
 public record UpdateClientCommand(Guid Id, string Name, string PhoneNumber) : IRequest;
 
-public class UpdateClientCommandHandler(IClientRepository clientRepository) : IRequestHandler<UpdateClientCommand>
+public class UpdateClientCommandHandler(IClientRepository clientRepository, IUnitOfWork unitOfWork)
+    : IRequestHandler<UpdateClientCommand>
 {
     public async Task Handle(UpdateClientCommand request, CancellationToken ct)
     {
@@ -16,5 +18,6 @@ public class UpdateClientCommandHandler(IClientRepository clientRepository) : IR
         client.SetPhoneNumber(request.PhoneNumber);
 
         await clientRepository.UpdateAsync(client, ct);
+        await unitOfWork.SaveChangesAsync(ct);
     }
 }

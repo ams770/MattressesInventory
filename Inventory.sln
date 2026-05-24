@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.Inrastructure", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.Application", "src\Inventory.Application\Inventory.Application.csproj", "{AE10EC7D-ED6D-4B22-A0F4-332F469A81A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.API", "src\Inventory.API\Inventory.API.csproj", "{CC3A2E5A-306C-45F3-8429-C4190591AE27}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.API", "Inventory.API\Inventory.API.csproj", "{BCBFC88E-8E59-4026-966B-7C1EB36BD19C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,9 +26,9 @@ Global
 		{AE10EC7D-ED6D-4B22-A0F4-332F469A81A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE10EC7D-ED6D-4B22-A0F4-332F469A81A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE10EC7D-ED6D-4B22-A0F4-332F469A81A7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CC3A2E5A-306C-45F3-8429-C4190591AE27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CC3A2E5A-306C-45F3-8429-C4190591AE27}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CC3A2E5A-306C-45F3-8429-C4190591AE27}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CC3A2E5A-306C-45F3-8429-C4190591AE27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCBFC88E-8E59-4026-966B-7C1EB36BD19C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCBFC88E-8E59-4026-966B-7C1EB36BD19C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCBFC88E-8E59-4026-966B-7C1EB36BD19C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCBFC88E-8E59-4026-966B-7C1EB36BD19C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

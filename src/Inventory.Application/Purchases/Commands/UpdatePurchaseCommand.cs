@@ -1,3 +1,4 @@
+using Inventory.Application.Interfaces;
 using MediatR;
 using Inventory.Domain.Interfaces;
 
@@ -5,7 +6,7 @@ namespace Inventory.Application.Purchases.Commands;
 
 public record UpdatePurchaseCommand(Guid Id, Guid VendorId) : IRequest;
 
-public class UpdatePurchaseCommandHandler(IPurchaseRepository repository) : IRequestHandler<UpdatePurchaseCommand>
+public class UpdatePurchaseCommandHandler(IPurchaseRepository repository, IUnitOfWork unitOfWork) : IRequestHandler<UpdatePurchaseCommand>
 {
     public async Task Handle(UpdatePurchaseCommand request, CancellationToken ct)
     {
@@ -14,5 +15,6 @@ public class UpdatePurchaseCommandHandler(IPurchaseRepository repository) : IReq
 
         purchase.SetVendorId(request.VendorId);
         await repository.UpdateAsync(purchase, ct);
+        await unitOfWork.SaveChangesAsync(ct);
     }
 }

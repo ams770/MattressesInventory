@@ -1,3 +1,4 @@
+using Inventory.Application.Interfaces;
 using MediatR;
 using Inventory.Domain.Interfaces;
 
@@ -5,7 +6,7 @@ namespace Inventory.Application.LocationPoints.Commands;
 
 public record UpdateLocationPointCommand(Guid Id, string Name) : IRequest;
 
-public class UpdateLocationPointCommandHandler(ILocationPointRepository repository)
+public class UpdateLocationPointCommandHandler(ILocationPointRepository repository, IUnitOfWork unitOfWork)
     : IRequestHandler<UpdateLocationPointCommand>
 {
     public async Task Handle(UpdateLocationPointCommand request, CancellationToken ct)
@@ -15,5 +16,6 @@ public class UpdateLocationPointCommandHandler(ILocationPointRepository reposito
 
         locationPoint.SetName(request.Name);
         await repository.UpdateAsync(locationPoint, ct);
+        await unitOfWork.SaveChangesAsync(ct);
     }
 }

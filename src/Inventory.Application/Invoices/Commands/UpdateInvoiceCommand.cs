@@ -1,3 +1,4 @@
+using Inventory.Application.Interfaces;
 using MediatR;
 using Inventory.Domain.Enums;
 using Inventory.Domain.Interfaces;
@@ -12,7 +13,7 @@ public record UpdateInvoiceCommand(
     double PaidAmount, 
     InvoiceType InvoiceType) : IRequest;
 
-public class UpdateInvoiceCommandHandler(IInvoiceRepository invoiceRepository) : IRequestHandler<UpdateInvoiceCommand>
+public class UpdateInvoiceCommandHandler(IInvoiceRepository invoiceRepository, IUnitOfWork unitOfWork) : IRequestHandler<UpdateInvoiceCommand>
 {
     public async Task Handle(UpdateInvoiceCommand request, CancellationToken ct)
     {
@@ -24,5 +25,6 @@ public class UpdateInvoiceCommandHandler(IInvoiceRepository invoiceRepository) :
         invoice.SetInvoiceType(request.InvoiceType);
 
         await invoiceRepository.UpdateAsync(invoice, ct);
+        await unitOfWork.SaveChangesAsync(ct);
     }
 }

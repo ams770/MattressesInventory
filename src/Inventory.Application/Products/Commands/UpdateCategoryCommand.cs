@@ -1,3 +1,4 @@
+using Inventory.Application.Interfaces;
 using MediatR;
 using Inventory.Domain.Interfaces;
 
@@ -5,7 +6,7 @@ namespace Inventory.Application.Products.Commands;
 
 public record UpdateCategoryCommand(Guid Id, string Name, string? ImageUrl, string? Description, bool IsActive) : IRequest;
 
-public class UpdateCategoryCommandHandler(ICategoryRepository repository) : IRequestHandler<UpdateCategoryCommand>
+public class UpdateCategoryCommandHandler(ICategoryRepository repository, IUnitOfWork unitOfWork) : IRequestHandler<UpdateCategoryCommand>
 {
     public async Task Handle(UpdateCategoryCommand request, CancellationToken ct)
     {
@@ -18,5 +19,6 @@ public class UpdateCategoryCommandHandler(ICategoryRepository repository) : IReq
         category.SetActive(request.IsActive);
 
         await repository.UpdateAsync(category, ct);
+        await unitOfWork.SaveChangesAsync(ct);
     }
 }

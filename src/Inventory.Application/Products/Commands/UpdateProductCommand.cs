@@ -1,3 +1,4 @@
+using Inventory.Application.Interfaces;
 using MediatR;
 using Inventory.Domain.Interfaces;
 
@@ -5,7 +6,7 @@ namespace Inventory.Application.Products.Commands;
 
 public record UpdateProductCommand(Guid Id, string Code, string Name, string Barcode, bool IsActive, string? Description, string? ImageUrl) : IRequest;
 
-public class UpdateProductCommandHandler(IProductRepository repository) : IRequestHandler<UpdateProductCommand>
+public class UpdateProductCommandHandler(IProductRepository repository, IUnitOfWork unitOfWork) : IRequestHandler<UpdateProductCommand>
 {
     public async Task Handle(UpdateProductCommand request, CancellationToken ct)
     {
@@ -20,5 +21,6 @@ public class UpdateProductCommandHandler(IProductRepository repository) : IReque
         product.SetImageUrl(request.ImageUrl ?? "");
 
         await repository.UpdateAsync(product, ct);
+        await unitOfWork.SaveChangesAsync(ct);
     }
 }

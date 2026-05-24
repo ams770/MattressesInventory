@@ -1,3 +1,3 @@
 namespace Inventory.Domain.Exceptions;
 
-public class DomainException(string message) : Exception;
+public class DomainException(string message) : Exception(message);
