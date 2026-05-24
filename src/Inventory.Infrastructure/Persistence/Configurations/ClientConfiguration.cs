@@ -1,0 +1,33 @@
+using Inventory.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace Inventory.Infrastructure.Persistence.Configurations;
+
+public class ClientConfiguration : IEntityTypeConfiguration<Client>
+{
+    public void Configure(EntityTypeBuilder<Client> builder)
+    {
+        builder.ToTable("Clients");
+
+        builder.HasKey(c => c.Id);
+
+        builder.Property(c => c.Id)
+            .ValueGeneratedNever();
+
+        builder.Property(c => c.Name)
+            .HasMaxLength(100)
+            .IsRequired();
+
+        builder.Property(c => c.PhoneNumber)
+            .HasMaxLength(20)
+            .IsRequired();
+
+        builder.Property(c => c.CreatedAt)
+            .IsRequired();
+
+        // Indexes
+        builder.HasIndex(c => c.PhoneNumber)
+            .IsUnique();
+    }
+}
