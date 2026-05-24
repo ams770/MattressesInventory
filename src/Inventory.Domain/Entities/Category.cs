@@ -48,6 +48,11 @@ public class Category : Entity<Guid>
         ValidateImageUrl(imageUrl);
         ImageUrl = imageUrl;
     }
+
+    public void SetActive(bool isActive)
+    {
+        IsActive = isActive;
+    }
     
 
     // Validators
