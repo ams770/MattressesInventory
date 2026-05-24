@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Inventory.Application.Purchases.Commands;
-using Maintrols.Shared.SharedKernel.Primitives;
+using Inventory.API.Common;
 
 namespace Inventory.API.Controllers;
 

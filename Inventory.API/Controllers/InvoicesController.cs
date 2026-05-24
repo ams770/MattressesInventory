@@ -4,7 +4,7 @@ using Inventory.Application.Invoices.Commands;
 using Inventory.Application.Invoices.Queries;
 using Inventory.Domain.Common;
 using Inventory.Domain.Enums;
-using Maintrols.Shared.SharedKernel.Primitives;
+using Inventory.API.Common;
 
 namespace Inventory.API.Controllers;
 

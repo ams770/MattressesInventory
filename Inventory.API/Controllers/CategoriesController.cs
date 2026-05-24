@@ -3,7 +3,7 @@ using Inventory.Application.Products;
 using Inventory.Application.Products.Commands;
 using Inventory.Application.Products.Queries;
 using Inventory.Domain.Common;
-using Maintrols.Shared.SharedKernel.Primitives;
+using Inventory.API.Common;
 
 namespace Inventory.API.Controllers;
 

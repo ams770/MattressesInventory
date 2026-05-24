@@ -14,4 +14,10 @@
         <ProjectReference Include="..\src\Inventory.Application\Inventory.Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <None Update="Translations\*.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
 </Project>

@@ -1,6 +1,14 @@
-namespace Inventory.Inrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
-public class InventoryDbContext
+namespace Inventory.Infrastructure.Persistence;
+
+public class InventoryDbDbContext(DbContextOptions<InventoryDbDbContext> options) : DbContext(options)
 {
     
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        //------ Auto-discovers all IEntityTypeConfiguration<T> ------//
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(InventoryDbDbContext).Assembly);
+    }
+
 }

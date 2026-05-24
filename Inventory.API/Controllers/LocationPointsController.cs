@@ -3,7 +3,7 @@ using Inventory.Application.LocationPoints;
 using Inventory.Application.LocationPoints.Commands;
 using Inventory.Application.LocationPoints.Queries;
 using Inventory.Domain.Common;
-using Maintrols.Shared.SharedKernel.Primitives;
+using Inventory.API.Common;
 
 namespace Inventory.API.Controllers;
 
