@@ -1,6 +1,7 @@
 using Inventory.Domain.Common;
 using Inventory.Domain.Entities;
 using Inventory.Domain.Interfaces;
+using Inventory.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Inventory.Infrastructure.Persistence.Repositories;
@@ -66,5 +67,18 @@ public class StockProductRepository(InventoryDbDbContext dbContext)
             .ToListAsync(cancellationToken);
 
         return new PagedResult<StockProduct>(items, totalCount, request.PageNumber, request.PageSize);
+    }
+
+    public async Task<int> GetCountByProductIdAndStatusAsync(Guid productId, StockProductStatus status, CancellationToken cancellationToken = default)
+    {
+        return await DbSet.CountAsync(s => s.ProductId == productId && s.Status == status, cancellationToken);
+    }
+
+    public async Task<List<StockProduct>> GetAvailableProductsAsync(Guid productId, int count, CancellationToken cancellationToken = default)
+    {
+        return await DbSet
+            .Where(s => s.ProductId == productId && s.Status == StockProductStatus.InStock)
+            .Take(count)
+            .ToListAsync(cancellationToken);
     }
 }

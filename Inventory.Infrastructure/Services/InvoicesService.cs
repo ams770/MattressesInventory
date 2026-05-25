@@ -10,8 +10,12 @@ namespace Inventory.Infrastructure.Services;
 
 public class InvoicesService(IMediator mediator) : IInvoicesService
 {
-    public Task<Guid> CreateAsync(Guid clientId, double totalAmount, double totalDiscount, double paidAmount, InvoiceType invoiceType, CancellationToken ct = default)
-        => mediator.Send(new CreateInvoiceCommand(clientId, totalAmount, totalDiscount, paidAmount, invoiceType), ct);
+    public Task<Guid> CreateAsync(Guid clientId, double paidAmount, InvoiceType invoiceType, List<CreateInvoiceProductDto> products, CancellationToken ct = default)
+        => mediator.Send(new CreateInvoiceCommand(
+            clientId,
+            paidAmount,
+            invoiceType,
+            products.Select(p => new CreateInvoiceProductCommand(p.Id, p.SoldByPrice, p.Qty)).ToList()), ct);
 
     public Task UpdateAsync(Guid id, Guid clientId, double totalAmount, double totalDiscount, double paidAmount, InvoiceType invoiceType, CancellationToken ct = default)
         => mediator.Send(new UpdateInvoiceCommand(id, clientId, totalAmount, totalDiscount, paidAmount, invoiceType), ct);

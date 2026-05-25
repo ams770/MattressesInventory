@@ -8,4 +8,5 @@ public static class StockProductExceptions
     public class InValidPurchaseIdException() : DomainException("InvalidStockProductPurchaseId");
     public class InValidProductIdException() : DomainException("InvalidStockProductProductId");
     public class InValidLocationPointIdException() : DomainException("InvalidStockProductLocationPointId");
+    public class InsufficientStockException() : DomainException("InsufficientStockForProduct");
 }

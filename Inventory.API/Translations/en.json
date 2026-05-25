@@ -29,6 +29,7 @@
   "InvalidStockProductProductId": "Invalid product ID for stock product.",
   "InvalidStockProductLocationPointId": "Invalid location point ID for stock product.",
   "InvalidVendorName": "Invalid vendor name.",
+  "InsufficientStockForProduct": "Insufficient stock for one or more products.",
   "EntityNotFound": "Requested entity was not found.",
   "UnexpectedError": "An unexpected error occurred."
 }

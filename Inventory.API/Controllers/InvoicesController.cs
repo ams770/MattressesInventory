@@ -7,12 +7,16 @@ using Inventory.API.Common;
 
 namespace Inventory.API.Controllers;
 
+public record CreateInvoiceProductRequest(
+    Guid Id,
+    double SoldByPrice,
+    int Qty);
+
 public record CreateInvoiceRequest(
     Guid ClientId,
-    double TotalAmount,
-    double TotalDiscount,
     double PaidAmount,
-    InvoiceType InvoiceType);
+    InvoiceType InvoiceType,
+    List<CreateInvoiceProductRequest> Products);
 
 public record UpdateInvoiceRequest(
     Guid ClientId,
@@ -28,10 +32,9 @@ public class InvoicesController(IInvoicesService invoicesService) : ApiControlle
     {
         var id = await invoicesService.CreateAsync(
             request.ClientId,
-            request.TotalAmount,
-            request.TotalDiscount,
             request.PaidAmount,
             request.InvoiceType,
+            request.Products.Select(p => new CreateInvoiceProductDto(p.Id, p.SoldByPrice, p.Qty)).ToList(),
             ct);
         return Ok(Result<Guid>.Success(id));
     }

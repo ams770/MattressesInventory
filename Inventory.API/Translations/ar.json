@@ -29,6 +29,7 @@
   "InvalidStockProductProductId": "معرف المنتج لمنتج المخزن غير صالح.",
   "InvalidStockProductLocationPointId": "معرف نقطة الموقع لمنتج المخزن غير صالح.",
   "InvalidVendorName": "اسم المورد غير صالح.",
+  "InsufficientStockForProduct": "الكمية المتاحة في المخزن غير كافية لواحد أو أكثر من المنتجات.",
   "EntityNotFound": "الكيان المطلوب غير موجود.",
   "UnexpectedError": "حدث خطأ غير متوقع."
 }
