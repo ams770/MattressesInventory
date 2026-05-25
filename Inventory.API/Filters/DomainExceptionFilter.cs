@@ -41,26 +41,26 @@ public class DomainExceptionFilter : IExceptionFilter
     {
         var exception = context.Exception;
         var acceptLanguage = context.HttpContext.Request.Headers["Accept-Language"].ToString();
-        var isArabic = acceptLanguage.StartsWith("ar", StringComparison.OrdinalIgnoreCase);
+        // var isArabic = acceptLanguage.StartsWith("ar", StringComparison.OrdinalIgnoreCase);
 
         if (exception is DomainException domainException)
         {
             var key = domainException.Message;
-            var errorMessage = GetTranslation(key, isArabic);
+            var errorMessage = GetTranslation(key, acceptLanguage);
             var result = Result.Failure(errorMessage);
             context.Result = new BadRequestObjectResult(result);
             context.ExceptionHandled = true;
         }
         else if (exception is KeyNotFoundException)
         {
-            var errorMessage = GetTranslation("EntityNotFound", isArabic);
+            var errorMessage = GetTranslation("EntityNotFound", acceptLanguage);
             var result = Result.Failure(errorMessage);
             context.Result = new NotFoundObjectResult(result);
             context.ExceptionHandled = true;
         }
         else
         {
-            var errorMessage = GetTranslation("UnexpectedError", isArabic);
+            var errorMessage = GetTranslation("UnexpectedError", acceptLanguage);
             var result = Result.Failure(errorMessage);
             context.Result = new ObjectResult(result)
             {
@@ -70,9 +70,9 @@ public class DomainExceptionFilter : IExceptionFilter
         }
     }
 
-    private static string GetTranslation(string key, bool isArabic)
+    private static string GetTranslation(string key, string lang)
     {
-        var lang = isArabic ? "ar" : "en";
+        // var lang = isArabic ? "ar" : "en";
         if (Translations.TryGetValue(lang, out var langDict) && langDict.TryGetValue(key, out var translation))
         {
             return translation;
